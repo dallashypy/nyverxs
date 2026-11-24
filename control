@@ -1,0 +1,9 @@
+Package: com.nologs.nyverxs
+Name: NYVERXS
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Remote IOS client for Lien Quan Mobile - Discord ID login, ESP, aimbot and remote panel control.
+Maintainer: nologs
+Author: nologs
+Section: Tweaks
+Depends: mobilesubstrate

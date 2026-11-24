@@ -1,0 +1,16 @@
+# Theos build output
+.theos/
+packages/
+*.deb
+*.dylib
+
+# macOS noise
+.DS_Store
+__MACOSX/
+
+# Editor
+.vscode/
+*.xcuserstate
+
+# Logs
+*.log
