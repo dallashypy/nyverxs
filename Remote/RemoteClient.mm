@@ -260,9 +260,9 @@ static NSData *NYVEncodeJSON(id object) {
     NSTimeInterval delay = 2.0 * std::pow(1.7, (double)MIN(attempt, 6));
     if (delay > 30.0) delay = 30.0;
 
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), _queue, ^{
-        __strong typeof(weakSelf) self = weakSelf;
+        __strong __typeof(weakSelf) self = weakSelf;
         if (!self) return;
         if (!self.running || generation != self->_generation) return;
         self->_retryScheduled = NO;
@@ -308,10 +308,10 @@ static NSData *NYVEncodeJSON(id object) {
         @"sid": NYVSID(),
     });
 
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     NSURLSessionDataTask *task = [_session dataTaskWithRequest:request
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        __strong typeof(weakSelf) self = weakSelf;
+        __strong __typeof(weakSelf) self = weakSelf;
         if (!self) return;
         dispatch_async(self->_queue, ^{
             if (generation != self->_generation || !self.running) return;
@@ -379,10 +379,10 @@ static NSData *NYVEncodeJSON(id object) {
     request.timeoutInterval = 15.0;
     [request setValue:[@"Bearer " stringByAppendingString:_token] forHTTPHeaderField:@"Authorization"];
 
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     NSURLSessionDataTask *task = [_session dataTaskWithRequest:request
                                             completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        __strong typeof(weakSelf) self = weakSelf;
+        __strong __typeof(weakSelf) self = weakSelf;
         if (!self) return;
         dispatch_async(self->_queue, ^{
             if (generation != self->_generation || !self.running) return;
@@ -453,9 +453,9 @@ static NSData *NYVEncodeJSON(id object) {
 }
 
 - (void)startReceiveLocked:(NSURLSessionWebSocketTask *)task generation:(NSUInteger)generation {
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [task receiveMessageWithCompletionHandler:^(NSURLSessionWebSocketMessage *message, NSError *error) {
-        __strong typeof(weakSelf) self = weakSelf;
+        __strong __typeof(weakSelf) self = weakSelf;
         if (!self) return;
         dispatch_async(self->_queue, ^{
             if (generation != self->_generation || task != self->_task) return;
@@ -483,9 +483,9 @@ static NSData *NYVEncodeJSON(id object) {
                               20 * NSEC_PER_SEC,
                               2 * NSEC_PER_SEC);
 
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     dispatch_source_set_event_handler(timer, ^{
-        __strong typeof(weakSelf) self = weakSelf;
+        __strong __typeof(weakSelf) self = weakSelf;
         if (!self) return;
         if (!self.running || generation != self->_generation) return;
         [self sendRawLocked:@"{\"type\":\"pong\"}" generation:generation];
@@ -568,9 +568,9 @@ static NSData *NYVEncodeJSON(id object) {
     }
 
     if ([action isEqualToString:@"unload"] || [action isEqualToString:@"destruct"]) {
-        __weak typeof(self) weakSelf = self;
+        __weak __typeof(self) weakSelf = self;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 250 * NSEC_PER_MSEC), _queue, ^{
-            __strong typeof(weakSelf) self = weakSelf;
+            __strong __typeof(weakSelf) self = weakSelf;
             if (!self) return;
             if (generation == self->_generation) [self stopLocked];
         });
@@ -590,10 +590,10 @@ static NSData *NYVEncodeJSON(id object) {
     NSURLSessionWebSocketMessage *message =
         [[NSURLSessionWebSocketMessage alloc] initWithString:payload];
 
-    __weak typeof(self) weakSelf = self;
+    __weak __typeof(self) weakSelf = self;
     [task sendMessage:message completionHandler:^(NSError *error) {
         if (!error) return;
-        __strong typeof(weakSelf) self = weakSelf;
+        __strong __typeof(weakSelf) self = weakSelf;
         if (!self) return;
         dispatch_async(self->_queue, ^{
             if (task == self->_task) [self dropSocketLocked:error generation:generation];
