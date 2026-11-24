@@ -21,6 +21,8 @@ jobs:
       - name: Theos
         run: |
           git clone --quiet --recursive https://github.com/theos/theos.git "$HOME/theos"
+          # theos ships sdks/ as a placeholder dir; git clone refuses a non-empty target
+          rm -rf "$HOME/theos/sdks"
           git clone --quiet --filter=blob:none --sparse --depth 1 \
             https://github.com/theos/sdks.git "$HOME/theos/sdks"
           cd "$HOME/theos/sdks"
