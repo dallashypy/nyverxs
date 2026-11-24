@@ -898,7 +898,7 @@ static void nyv_disable_all(void) {
     WallHackEnabled = false;
 }
 
-void nyv_remote_apply(const char *param, const char *value) {
+extern "C" void nyv_remote_apply(const char *param, const char *value) {
     if (!param || param[0] == '\0') return;
 
     const bool on = nyv_truthy(value);
@@ -1028,7 +1028,7 @@ void nyv_remote_apply(const char *param, const char *value) {
 #undef NYV_MEM_TOGGLE
 }
 
-void nyv_remote_action(const char *action, const char *param, const char *value,
+extern "C" void nyv_remote_action(const char *action, const char *param, const char *value,
                        char *reply, size_t cap) {
     (void)param;
     (void)value;
@@ -1066,7 +1066,7 @@ void nyv_remote_action(const char *action, const char *param, const char *value,
     }
 }
 
-void nyv_remote_status_json(char *out, size_t cap) {
+extern "C" void nyv_remote_status_json(char *out, size_t cap) {
     if (!out || cap == 0) return;
 
     const bool any_memory = SpeeeX2Enabled || NoRecoilEnabled || WallGlowEnabled ||
